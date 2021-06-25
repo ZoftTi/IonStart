@@ -1,5 +1,6 @@
 <template>
   <div class="stars-bar">
+    <!-- stars Item -->
     <Item v-for="item in stars" :item="item" :rows="item.size"/>
   </div>
 </template>

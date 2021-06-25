@@ -21,6 +21,8 @@ export default defineComponent({
     ItemMany,
   },
   setup(props) {
+    console.log(props.rows);
+    
     const itemWidth = computed(
       () => 45 * props.rows + 13 * (props.rows + 1) + "px"
     )

@@ -1,28 +1,62 @@
 <template>
   <div class="search-bar">
     <div class="search-list-container">
-      <div class="google">Google</div>
-      <div class="baidu">Baidu</div>
-      <div class="Bing">Bing</div>
+      <div
+        v-for="(item, index) in store.state.searchEngines"
+        class="item.engineName"
+        :class="store.state.searchIndex === index ? 'active' : null"
+        :keys="item.engineName"
+        @click="changeSearchEngine(index)"
+      >
+        {{ item.engineName }}
+      </div>
     </div>
     <div class="search-input-container">
-      <form action="" method="get">
-        <input type="text" name="" id="" placeholder="Search"  />
-      </form>
+      <input
+        v-model="searchInput"
+        type="text"
+        name=""
+        id=""
+        placeholder="Search"
+        @keydown.enter="jumpPage"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue"
+import { defineComponent, reactive, ref, computed } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "App",
   setup() {
-    
+    const store = useStore();
+    // 搜索表单
+    const searchInput = ref("");
+    // 选择的搜索引擎
+    const activeEngine: any = computed(() => {
+      return store.state.searchEngines[store.state.searchIndex];
+    });
+    console.log(activeEngine);
+
+    // 改变搜索的引擎
+    const changeSearchEngine = (index: number) => {
+      store.dispatch("updateSearchIndex", index);
+    };
+
+    // 跳转页面
+    const jumpPage = () => {
+      window.open(`${activeEngine.value.url}${searchInput.value}`, "_blank");
+    };
     return {
-    }
+      changeSearchEngine,
+      store,
+      searchInput,
+      activeEngine,
+      jumpPage,
+    };
   },
-})
+});
 </script>
 
 <style lang="less" scoped>
@@ -49,7 +83,7 @@ export default defineComponent({
       cursor: pointer;
     }
 
-    div:nth-child(2) {
+    .active {
       border-bottom: 3px solid;
     }
   }
