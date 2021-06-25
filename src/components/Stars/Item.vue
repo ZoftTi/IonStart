@@ -14,7 +14,7 @@ export default defineComponent({
   name: "App",
   props: {
     item: Object,
-    row: Number
+    rows: Number
   },
   components: {
     ItemOnly,
