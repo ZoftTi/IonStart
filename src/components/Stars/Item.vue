@@ -1,7 +1,7 @@
 <template>
   <div class="item" :style="{ width: itemWidth }">
-    <ItemOnly />
-    <ItemMany />
+    <ItemOnly v-if="item.data.length == 1" :data="item.data[0]"/>
+    <ItemMany v-else :data="item.data"/>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default defineComponent({
   name: "App",
   props: {
     item: Object,
-    rows: Number
+    rows: null
   },
   components: {
     ItemOnly,
@@ -24,6 +24,7 @@ export default defineComponent({
     const itemWidth = computed(
       () => 45 * props.rows + 13 * (props.rows + 1) + "px"
     )
+    
     return {
       itemWidth,
     }
