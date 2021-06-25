@@ -22,9 +22,11 @@ import { defineComponent, reactive } from "vue"
 export default defineComponent({
   name: "App",
   props: {
+    // 数据
     data: Object
   },
   setup() {
+    // 右键菜单
     const rightMenuObj = reactive({
       list: [
         {

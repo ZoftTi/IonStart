@@ -29,7 +29,7 @@ import { defineComponent, computed, watch, ref } from "vue"
 import { useStore } from "vuex"
 
 export default defineComponent({
-  name: "App",
+  name: "rightMenu",
   setup() {
     const store = useStore()
 
