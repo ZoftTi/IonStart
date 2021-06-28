@@ -1,0 +1,22 @@
+{
+  "name": "vue-ionstart",
+  "version": "0.0.0",
+  "scripts": {
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "vue": "^3.0.5",
+    "vuex": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.5",
+    "css-loader": "^5.2.6",
+    "less": "^4.1.1",
+    "less-loader": "^10.0.0",
+    "vite": "^2.3.8"
+  }
+}
