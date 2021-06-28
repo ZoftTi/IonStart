@@ -24,39 +24,30 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, reactive, ref, computed } from "vue"
+<script setup>
+
+import { reactive, ref, computed } from "vue"
 import { useStore } from "vuex"
-export default defineComponent({
-  name: "App",
-  setup() {
-    const store = useStore()
-    // 搜索表单
-    const searchInput = ref("")
-    // 选择的搜索引擎
-    const activeEngine = computed(() => {
-      return store.state.searchEngines[store.state.searchIndex]
-    })
-    console.log(activeEngine)
 
-    // 改变搜索的引擎
-    const changeSearchEngine = (index) => {
-      store.dispatch("updateSearchIndex", index)
-    }
-
-    // 跳转页面
-    const jumpPage = () => {
-      window.open(`${activeEngine.value.url}${searchInput.value}`, "_blank")
-    }
-    return {
-      changeSearchEngine,
-      store,
-      searchInput,
-      activeEngine,
-      jumpPage,
-    }
-  },
+const store = useStore()
+// 搜索表单
+const searchInput = ref("")
+// 选择的搜索引擎
+const activeEngine = computed(() => {
+  return store.state.searchEngines[store.state.searchIndex]
 })
+console.log(activeEngine)
+
+// 改变搜索的引擎
+const changeSearchEngine = (index) => {
+  store.dispatch("updateSearchIndex", index)
+}
+
+// 跳转页面
+const jumpPage = () => {
+  window.open(`${activeEngine.value.url}${searchInput.value}`, "_blank")
+}
+
 </script>
 
 <style lang="less" scoped>

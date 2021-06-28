@@ -24,43 +24,33 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, computed, watch, ref } from "vue"
+<script setup>
+import { computed, watch, ref } from "vue"
 import { useStore } from "vuex"
 
-export default defineComponent({
-  name: "App",
-  setup() {
-    const store = useStore()
+const store = useStore()
+const rightMenuIsShow = ref("")
 
-    const rightMenuIsShow = ref("")
-
-    watch(
-      computed(() => store.state.rightMenu.isShow),
-      (newValue) => {
-        if (newValue || !rightMenuIsShow) {
-          rightMenuIsShow.value = true
-        } else if (rightMenuIsShow && !newValue) {
-          setTimeout(() => {
-            rightMenuIsShow.value = false
-          }, 200)
-        }
-      }
-    )
-
-    document.addEventListener("click", () => {
-      // 隐藏右键菜单
-      store.dispatch("updateRightMenu", {
-        isShow: false,
-      })
-    })
-
-    return {
-      store,
-      rightMenuIsShow,
+watch(
+  computed(() => store.state.rightMenu.isShow),
+  (newValue) => {
+    if (newValue || !rightMenuIsShow) {
+      rightMenuIsShow.value = true
+    } else if (rightMenuIsShow && !newValue) {
+      setTimeout(() => {
+        rightMenuIsShow.value = false
+      }, 200)
     }
-  },
+  }
+)
+
+document.addEventListener("click", () => {
+  // 隐藏右键菜单
+  store.dispatch("updateRightMenu", {
+    isShow: false,
+  })
 })
+
 </script>
 
 <style lang="less" scoped>

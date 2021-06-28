@@ -1,43 +1,40 @@
 <template>
-  <div class="item-many" :style="{ 'flex-direction': (data.length <= 3 ? 'row' : 'column')}">
+  <div
+    class="item-many"
+    :style="{ 'flex-direction': data.length <= 3 ? 'row' : 'column' }"
+  >
     <a v-for="(item, index) in data" :href="item.link">
-      <img :src="item.icon" :title="item.title" v-right-click="rightMenuObj"/>
+      <img :src="item.icon" :title="item.title" v-right-click="rightMenuObj" />
     </a>
   </div>
 </template>
 
-<script>
-import { defineComponent, reactive } from "vue"
-import { useStore } from 'vuex';
-export default defineComponent({
-  name: "ItemMany",
-  props: {
-    data: Array
-  },
-  setup() {
-    const store = useStore()
-    const rightMenuObj = reactive({
-      list: [
-        {
-          text: "编辑",
-          icon: "icon-edit",
-          handler: () => {
-            console.log("编辑")
-          },
-        },
-        {
-          text: "删除",
-          icon: "icon-delete",
-          handler: () => {
-            console.log("删除")
-          },
-        },
-      ],
-    })
-    return {
-      rightMenuObj,
-    }
-  },
+<script setup>
+import { defineProps, reactive } from "vue"
+import { useStore } from "vuex"
+
+const props = defineProps({
+  data: Array,
+})
+
+const store = useStore()
+const rightMenuObj = reactive({
+  list: [
+    {
+      text: "编辑",
+      icon: "icon-edit",
+      handler: () => {
+        console.log("编辑")
+      },
+    },
+    {
+      text: "删除",
+      icon: "icon-delete",
+      handler: () => {
+        console.log("删除")
+      },
+    },
+  ],
 })
 </script>
 
