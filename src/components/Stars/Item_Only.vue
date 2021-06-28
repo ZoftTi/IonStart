@@ -2,52 +2,43 @@
   <div class="item-only" v-right-click="rightMenuObj">
     <a :href="data.link">
       <div class="item-top flex-center">
-        <img
-          :src="data.icon"
-          data-groupindex="1"
-          data-index="0"
-        />
+        <img :src="data.icon" data-groupindex="1" data-index="0" />
       </div>
       <div class="item-bottom">
         <h4>
-          {{data.title}}
+          {{ data.title }}
         </h4>
       </div>
     </a>
   </div>
 </template>
 
-<script>
-import { defineComponent, reactive } from "vue"
-export default defineComponent({
-  name: "App",
-  props: {
-    data: Object
-  },
-  setup() {
-    const rightMenuObj = reactive({
-      list: [
-        {
-          text: "编辑",
-          icon: "icon-edit",
-          handler: () => {
-            console.log("编辑")
-          },
-        },
-        {
-          text: "删除",
-          icon: "icon-delete",
-          handler: () => {
-            console.log("删除")
-          },
-        },
-      ],
-    })
-    return {
-      rightMenuObj,
-    }
-  },
+<script setup>
+import { reactive, defineProps } from "vue"
+
+const props = defineProps({
+  data: Object
 })
+
+const rightMenuObj = reactive({
+  list: [
+    {
+      text: "编辑",
+      icon: "icon-edit",
+      handler: () => {
+        console.log("编辑")
+      },
+    },
+    {
+      text: "删除",
+      icon: "icon-delete",
+      handler: () => {
+        console.log("删除")
+      },
+    },
+  ],
+})
+
 </script>
 
 <style lang="less" scoped>
