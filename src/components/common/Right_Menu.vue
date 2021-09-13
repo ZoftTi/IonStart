@@ -1,27 +1,26 @@
 <template>
-  <div
-    class="right-menu"
-    :class="{
-      'right-menu-show': store.state.rightMenu.isShow,
-      'right-menu-hide': !store.state.rightMenu.isShow,
-    }"
-    :style="{
-      display: rightMenuIsShow ? 'block' : 'none',
-      top: store.state.rightMenu.top,
-      left: store.state.rightMenu.left,
-    }"
-  >
+  <transition name="elastic">
     <div
-      class="menu-item"
-      v-for="item in store.state.rightMenu.list"
-      @click="item.handler"
+      class="right-menu"
+      v-if="state.menu.isShow"
+      :style="{
+        top: state.menu.top,
+        left: state.menu.left,
+      }"
+      @contextmenu.prevent
     >
-      <div class="icon">
-        <i class="iconfont" :class="item.icon"></i>
+      <div
+        class="menu-item"
+        v-for="item in state.menu.list"
+        @click="item.handler"
+      >
+        <div class="icon">
+          <i class="iconfont" :class="item.icon"></i>
+        </div>
+        <span>{{ item.text }}</span>
       </div>
-      <span>{{ item.text }}</span>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script setup>
@@ -29,52 +28,31 @@ import { computed, watch, ref } from "vue"
 import { useStore } from "vuex"
 
 const store = useStore()
-const rightMenuIsShow = ref("")
-
-watch(
-  computed(() => store.state.rightMenu.isShow),
-  (newValue) => {
-    if (newValue || !rightMenuIsShow) {
-      rightMenuIsShow.value = true
-    } else if (rightMenuIsShow && !newValue) {
-      setTimeout(() => {
-        rightMenuIsShow.value = false
-      }, 200)
-    }
-  }
-)
+const state = store.state
 
 document.addEventListener("click", () => {
   // 隐藏右键菜单
-  store.dispatch("updateRightMenu", {
+  store.commit("UPDATE_RIGHT_MENU", {
     isShow: false,
   })
 })
-
 </script>
 
 <style lang="less" scoped>
-.right-menu-hide {
-  animation: hide-elastic 0.4s;
+.elastic-enter-active {
+  animation: elastic-in 0.4s;
 }
 
-@keyframes hide-elastic {
-  0% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
+.elastic-leave-active {
+  animation: elastic-out 0.4s;
+}
 
-  100% {
+@keyframes elastic-in {
+  0% {
     opacity: 0;
     transform: scale(0.5);
   }
-}
 
-.right-menu-show {
-  animation: show-elastic 0.4s;
-}
-
-@keyframes show-elastic {
   70% {
     opacity: 1;
     transform: scale(1.05);
@@ -86,21 +64,32 @@ document.addEventListener("click", () => {
   }
 }
 
+@keyframes elastic-out {
+  0% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
 .right-menu {
   position: absolute;
   width: 140px;
   z-index: 999;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
 
-  background-color: var(--background-pure);
-  transform-origin: left top;
-  transition: transform 0.4s, top 0.4s, left 0.4s, opatity 0.4s;
+  color: var(--primary-text-color);
+  background-color: var(--primary-background-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;
 
-  opacity: 0;
-  transform: scale(0.5);
-  animation-fill-mode: forwards;
+  transform-origin: left top;
+  transition: transform 0.4s, top 0.4s, left 0.4s, opatity 0.4s, background-color 0.4s ease, color 0.4s ease;
+  -webkit-transition: transform 0.4s, top 0.4s, left 0.4s, opacity 0.4s, background-color 0.4s ease, color 0.4s ease;
 
   .menu-item {
     height: 40px;
@@ -112,7 +101,7 @@ document.addEventListener("click", () => {
     transition: background-color 0.25s;
 
     &:hover {
-      background-color: var(--background-transparent-hover);
+      background-color: var(--tertiary-background-color);
     }
 
     .icon {

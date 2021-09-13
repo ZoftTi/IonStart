@@ -1,25 +1,16 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import store from "./store";
-import "./assets/css/base.css";
+import axios from './network/axios.js'
+import "./assets/css/base.less";
+import * as directives from './directives/index'
 
-let app = createApp(App);
+const app = createApp(App);
 
-// 自定义指令
-app.directive("rightClick", (el, binding) => {
-  el.oncontextmenu = function(e) {
-    const oX = e.clientX;
-    const oY = e.clientY;
-    console.log(oX, oY);
-    // 右键菜单出现后的位置
-    store.dispatch("updateRightMenu", {
-      isShow: true,
-      left: oX + "px",
-      top: oY + "px",
-      list: binding.value.list,
-    });
-    return false;
-  };
-});
+// 注册自定义指令
+Object.keys(directives).forEach(k => app.directive(k, directives[k]))
+
+// 全局注册 axios
+app.config.globalProperties.$axios = axios
 
 app.use(store).mount("#app");

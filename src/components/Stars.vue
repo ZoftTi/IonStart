@@ -1,17 +1,72 @@
 <template>
-  <div class="stars-bar">
-    <Item v-for="item in stars" :item="item" :rows="item.size" />
+  <div
+    class="stars-bar"
+    v-if="!stars_attribute.stars_hidden"
+    :style="{ top: stars_attribute.stars_distance + 'px' }"
+  >
+    <draggable
+      v-model="itemData"
+      tag="transition-group"
+      :item-key="(key) => key"
+      animation="300"
+      @start="clearTransition()"
+      @end="recoveryTransition()"
+    >
+      <template #item="{ element, index }">
+        <Item
+          :item="element"
+          :groupIndex="index"
+          :class="{ 'transition-clear': isTransition }"
+        />
+      </template>
+    </draggable>
   </div>
 </template>
 
-<script setup>
-import { computed } from "vue"
+<script>
+import { computed, defineComponent, onMounted, reactive, ref } from "vue"
 import { useStore } from "vuex"
 import Item from "./Stars/Item.vue"
+import draggable from "vuedraggable"
 
-const store = useStore()
-const stars = computed(() => store.state.stars)
+export default defineComponent({
+  components: {
+    Item,
+    draggable,
+  },
+  setup() {
+    const store = useStore()
+    const stars_attribute = store.state.setting.stars_attribute
 
+    const itemData = computed({
+      get() {
+        return store.state.stars
+      },
+      set(value) {
+        store.commit("REPLACE_STAR_ORDER", value)
+      },
+    })
+
+    const isTransition = ref(false)
+
+    const clearTransition = () => {
+      isTransition.value = true
+    }
+
+    const recoveryTransition = () => {
+      isTransition.value = false
+    }
+
+    return {
+      store,
+      stars_attribute,
+      itemData,
+      isTransition,
+      clearTransition,
+      recoveryTransition,
+    }
+  },
+})
 </script>
 
 <style lang="less" scoped>
@@ -20,6 +75,13 @@ const stars = computed(() => store.state.stars)
   top: 430px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
+  max-width: 90%;
+  min-width: 80%;
+  text-align: center;
+
+  .transition-clear {
+    transition: none;
+    box-shadow: none;
+  }
 }
 </style>
