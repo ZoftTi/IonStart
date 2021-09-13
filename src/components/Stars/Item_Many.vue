@@ -3,8 +3,17 @@
     class="item-many"
     :style="{ 'flex-direction': data.length <= 3 ? 'row' : 'column' }"
   >
-    <a v-for="(item, index) in data" :href="item.link">
-      <img :src="item.icon" :title="item.title" v-right-click="rightMenuObj" />
+    <a
+      v-for="(item, index) in data"
+      :href="item.link"
+      @click.prevent="jumpLink(item)"
+    >
+      <img
+        :src="item.icon"
+        :title="item.title"
+        alt=""
+        v-right-click.stop="getMenuData(item, index)"
+      />
     </a>
   </div>
 </template>
@@ -12,30 +21,88 @@
 <script setup>
 import { defineProps, reactive } from "vue"
 import { useStore } from "vuex"
+const store = useStore()
 
 const props = defineProps({
   data: Array,
+  groupIndex: Number,
 })
 
-const store = useStore()
-const rightMenuObj = reactive({
-  list: [
-    {
-      text: "编辑",
-      icon: "icon-edit",
-      handler: () => {
-        console.log("编辑")
+const jumpLink = (data) => {
+  console.log(data)
+  if (data.type === "application") {
+    store.commit("CHANGE_APP_STATUS", {
+      appKey: data.link,
+      isShow: true,
+    })
+    return false
+  } else {
+    window.open(
+      data.link,
+      store.state.setting.target_blank ? "_blank" : "_self"
+    )
+  }
+}
+
+const getMenuData = (item, itemIndex) => {
+  return reactive({
+    list: [
+      {
+        text: "编辑",
+        icon: "icon-edit",
+        handler: (e) => {
+          console.log(item)
+          console.log(itemIndex, props.groupIndex)
+          store.commit("UPDATE_EDIT_STARS", {
+            isShow: true,
+            top: e.clientY - 300 + "px",
+            left: e.clientX - 125 + "px",
+            dataIndex: {
+              groupIndex: props.groupIndex,
+              itemIndex: itemIndex,
+            },
+            data: item,
+          })
+        },
       },
-    },
-    {
-      text: "删除",
-      icon: "icon-delete",
-      handler: () => {
-        console.log("删除")
+      {
+        text: "组样式",
+        icon: "icon-info",
+        handler: (e) => {
+          store.commit("UPDATE_EDIT_GROUP", {
+            isShow: true,
+            top: e.clientY - 300 + "px",
+            left: e.clientX - 125 + "px",
+            groupIndex: props.groupIndex,
+          })
+        },
       },
-    },
-  ],
-})
+      {
+        text: "添加到组",
+        icon: "icon-add",
+        handler: (e) => {
+          store.commit("UPDATE_ADD_STARS", {
+            isShow: true,
+            title: "添加到组",
+            top: e.clientY - 300 + "px",
+            left: e.clientX - 125 + "px",
+            groupIndex: props.groupIndex,
+          })
+        },
+      },
+      {
+        text: "删除",
+        icon: "icon-delete",
+        handler: () => {
+          store.commit("REMOVE_STAR_DATA", {
+            groupIndex: props.groupIndex,
+            itemIndex: itemIndex,
+          })
+        },
+      },
+    ],
+  })
+}
 </script>
 
 <style lang="less" scoped>

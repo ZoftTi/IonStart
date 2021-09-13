@@ -1,8 +1,8 @@
 <template>
   <div class="item-only" v-right-click="rightMenuObj">
-    <a :href="data.link">
+    <a :href="data.link" @click.prevent="jumpLink(data)">
       <div class="item-top flex-center">
-        <img :src="data.icon" data-groupindex="1" data-index="0" />
+        <img :src="data.icon" alt="" data-groupindex="1" data-index="0" />
       </div>
       <div class="item-bottom">
         <h4>
@@ -15,30 +15,73 @@
 
 <script setup>
 import { reactive, defineProps } from "vue"
+import { useStore } from "vuex"
+const store = useStore()
 
 const props = defineProps({
-  data: Object
+  data: Object,
+  groupIndex: Number,
 })
+
+const jumpLink = (data) => {
+  if (data.type === "application") {
+    store.commit("CHANGE_APP_STATUS", {
+      appKey: data.link,
+      isShow: true,
+    })
+    return false
+  } else {
+    window.open(
+      data.link,
+      store.state.setting.target_blank ? "_blank" : "_self"
+    )
+  }
+}
 
 const rightMenuObj = reactive({
   list: [
     {
       text: "编辑",
       icon: "icon-edit",
-      handler: () => {
-        console.log("编辑")
+      handler: (e) => {
+        console.log(props.data)
+        store.commit("UPDATE_EDIT_STARS", {
+          isShow: true,
+          top: e.clientY - 300 + "px",
+          left: e.clientX - 125 + "px",
+          dataIndex: {
+            groupIndex: props.groupIndex,
+            itemIndex: 0,
+          },
+          data: props.data,
+        })
+      },
+    },
+    {
+      text: "添加到组",
+      icon: "icon-add",
+      handler: (e) => {
+        store.commit("UPDATE_ADD_STARS", {
+          isShow: true,
+          title: "添加到组",
+          top: e.clientY - 300 + "px",
+          left: e.clientX - 125 + "px",
+          groupIndex: props.groupIndex,
+        })
       },
     },
     {
       text: "删除",
       icon: "icon-delete",
       handler: () => {
-        console.log("删除")
+        store.commit("REMOVE_STAR_DATA", {
+          groupIndex: props.groupIndex,
+          itemIndex: false,
+        })
       },
     },
   ],
 })
-
 </script>
 
 <style lang="less" scoped>
@@ -74,6 +117,10 @@ const rightMenuObj = reactive({
         white-space: nowrap;
         overflow: hidden;
         text-decoration: none;
+        color: var(--secondary-text-color);
+
+        transition: color 0.4s ease;
+        -webkit-transition: color 0.4s ease;
       }
     }
   }
