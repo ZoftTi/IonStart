@@ -34,7 +34,7 @@ export default (el, binding) => {
       }
     }
 
-    document.onmouseup = (e) => {
+    document.onmouseup = () => {
       document.onmousemove = null
       document.onmouseup = null
       // 还原过渡效果

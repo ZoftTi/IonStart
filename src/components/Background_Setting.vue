@@ -6,9 +6,9 @@
           <p>自定义「 {{ fileTips }} 」</p>
           <div
             class="custom-background"
-            @click="switchBackground(background_setting.custim_background)"
+            @click="switchBackground(background_setting.custom_background)"
           >
-            <img :src="background_setting.custim_background" alt="" />
+            <img :src="background_setting.custom_background" alt="" />
             <div class="custom-img-select flex-center" v-if="isShowCustom">
               <i class="iconfont icon-check"></i>
             </div>
@@ -78,7 +78,7 @@ export default defineComponent({
 
     const isShowCustom = computed(() => {
       const bgSetting = background_setting.value
-      return bgSetting.custim_background === bgSetting.background_url
+      return bgSetting.custom_background === bgSetting.background_url
     })
 
     const switchBackground = (item) => {
@@ -103,7 +103,7 @@ export default defineComponent({
         reader.readAsDataURL(file.value.files[0])
         reader.onload = function () {
           store.commit("UPDATE_BACKGROUND_ATTRIBUTE", {
-            changeKey: "custim_background",
+            changeKey: "custom_background",
             beforeData: this.result,
           })
           switchBackground(this.result)
