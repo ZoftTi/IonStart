@@ -117,6 +117,8 @@ const rightMenuObj = reactive({
         white-space: nowrap;
         overflow: hidden;
         text-decoration: none;
+        text-overflow: ellipsis;
+        
         color: var(--secondary-text-color);
 
         transition: color 0.4s ease;
