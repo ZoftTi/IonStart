@@ -45,8 +45,6 @@ export default defineComponent({
         date.minute = date.minute < 10 ? "0" + date.minute : date.minute
         date.second = date.second < 10 ? "0" + date.second : date.second
 
-        console.log(date.hour, date.minute, date.second);
-
         if (Number.isInteger(parseInt(date.second))) {
           flashing.value = !flashing.value
         }

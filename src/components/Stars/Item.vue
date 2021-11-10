@@ -36,9 +36,6 @@ const itemWidth = computed(
   () => 45 * props.item.size + 13 * (props.item.size + 1) + "px"
 )
 
-onMounted(() => {
-  console.log(props.groupIndex)
-})
 </script>
 
 <style lang="less" scoped>
