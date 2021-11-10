@@ -41,7 +41,7 @@ jobs:
           
       - name: Secret
         run: |
-          echo ${{ secrets.SSH_SECRET }} ~/.ssh/authorized_keys
+          echo ${{ secrets.SSH_SECRET }} ~/.ssh/id_rsa
           
       - name: Deploy 🚀
         run: |
