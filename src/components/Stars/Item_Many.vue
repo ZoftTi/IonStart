@@ -29,7 +29,6 @@ const props = defineProps({
 })
 
 const jumpLink = (data) => {
-  console.log(data)
   if (data.type === "application") {
     store.commit("CHANGE_APP_STATUS", {
       appKey: data.link,

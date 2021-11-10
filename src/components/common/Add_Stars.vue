@@ -308,7 +308,8 @@ const appClick = (item) => {
     }
 
     .loading {
-      background-color: var(--background-transparent-hover);
+      color: var(--primary-text-color);
+      background-color: var(--tertiary-background-color);
     }
   }
 }

@@ -28,9 +28,7 @@ const updateValue = (beforeValue) => {
   --button-width: 100px;
   --button-height: 59px;
   --toggle-diameter: 51px;
-  --button-toggle-offset: calc(
-    (var(--button-height) - var(--toggle-diameter)) / 2
-  );
+  --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
   --toggle-shadow-offset: 2px;
   --toggle-wider: 66px;
   --color-grey: #e9e9e9;
@@ -93,10 +91,7 @@ const updateValue = (beforeValue) => {
 
     input[type="checkbox"]:checked:active + span::after {
       transform: translateX(
-        calc(
-          var(--button-width) - var(--toggle-wider) -
-            var(--button-toggle-offset)
-        )
+        calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset))
       );
     }
   }
