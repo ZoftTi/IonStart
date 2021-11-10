@@ -7,6 +7,7 @@ export default {
     target_blank: false,
     dark_mode: false,
     auto_dark_mode: true,
+    mini_footer_info: false,
     logo_attribute: {
       logo_hidden: false,
       logo_distance: 125,

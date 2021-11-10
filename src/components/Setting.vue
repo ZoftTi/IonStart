@@ -31,6 +31,10 @@
           <span>自动深色模式( 跟随系统 )</span>
           <Switch v-model:value="auto_dark_mode" />
         </div>
+        <div class="row">
+          <span>更简洁的页脚信息</span>
+          <Switch v-model:value="mini_footer_info" />
+        </div>
       </div>
       <span class="row_subtitle">标题和距离</span>
       <div class="row_wrap">
@@ -64,7 +68,7 @@
           <input
             type="range"
             min="0"
-            max="500"
+            max="600"
             class="range"
             v-model="search_distance"
           />
@@ -95,7 +99,7 @@
           <input
             type="range"
             min="0"
-            max="500"
+            max="700"
             class="range"
             v-model="stars_distance"
           />
@@ -161,6 +165,7 @@ const focusInput = bindSettingData("focusInput")
 const target_blank = bindSettingData("target_blank")
 const dark_mode = bindSettingData("dark_mode")
 const auto_dark_mode = bindSettingData("auto_dark_mode")
+const mini_footer_info = bindSettingData("mini_footer_info")
 
 const logo_hidden = bindSettingData("logo_attribute", "logo_hidden")
 const logo_distance = bindSettingData("logo_attribute", "logo_distance")

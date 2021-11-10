@@ -21,6 +21,9 @@
     <AddStars />
 
     <NewTips />
+
+    <Footer />
+
   </div>
 </template>
 
@@ -36,6 +39,7 @@ import EditStars from "./components/common/Edit_Stars.vue"
 import EditGroup from "./components/common/Edit_Group.vue"
 import AddStars from "./components/common/Add_Stars.vue"
 import NewTips from "./components/NewTips.vue"
+import Footer from "./components/Footer.vue"
 import { useStore } from "vuex"
 import { computed, onMounted, watch } from "@vue/runtime-core"
 
