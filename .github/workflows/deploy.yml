@@ -45,5 +45,5 @@ jobs:
           
       - name: Deploy 🚀
         run: |
-          ssh deploy@zoft.work
+          ssh deploy@zoft.work -tt
           echo "test"
