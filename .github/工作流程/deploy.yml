@@ -37,13 +37,14 @@ jobs:
       - name: Build 🪛
         run: |
           npm run build
-          cp dist/index.html dist/404.html
-          
-      - name: Secret
-        run: |
-          echo ${{ secrets.SSH_SECRET }} ~/.ssh/id_rsa
           
       - name: Deploy 🚀
-        run: |
-          ssh deploy@zoft.work -tt
-          echo "test"
+        uses: easingthemes/ssh-deploy@v2.2.11
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
