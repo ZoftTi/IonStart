@@ -1,5 +1,5 @@
 import axios from "axios"
-axios.defaults.baseURL = "http://zoft.work:1231/api" //此路径为配置代理服务器时的代理路径
+axios.defaults.baseURL = "https://zoft.work:1231/api" //此路径为配置代理服务器时的代理路径
 
 export default {
   get(url, data, responseType) {
