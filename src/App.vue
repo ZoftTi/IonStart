@@ -41,9 +41,11 @@ import AddStars from "./components/common/Add_Stars.vue"
 import NewTips from "./components/NewTips.vue"
 import Footer from "./components/Footer.vue"
 import { useStore } from "vuex"
-import { computed, onMounted, watch } from "@vue/runtime-core"
+import { computed, onMounted, useAttrs, watch } from "@vue/runtime-core"
 
 const store = useStore()
+
+console.log(useAttrs());
 
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)")
 const autoDarkMode = computed(() => store.state.setting.auto_dark_mode)

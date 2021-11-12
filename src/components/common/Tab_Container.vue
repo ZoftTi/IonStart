@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue"
 import { useStore } from "vuex"
 
 const store = useStore()

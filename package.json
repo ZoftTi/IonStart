@@ -21,5 +21,6 @@
     "less": "^4.1.1",
     "less-loader": "^10.0.0",
     "vite": "^2.3.8"
-  }
+  },
+  "license" : "BSD-3-Clause"
 }

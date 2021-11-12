@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, reactive, ref } from "vue"
+import { computed, onMounted, reactive, ref } from "vue"
 import ItemOnly from "./Item_Only.vue"
 import ItemMany from "./Item_Many.vue"
 import { useStore } from "vuex"

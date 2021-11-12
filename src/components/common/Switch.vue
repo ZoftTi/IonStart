@@ -8,15 +8,12 @@
 </template>
 
 <script setup>
-import { defineProps, useContext } from "vue"
 
-const context = useContext()
-const props = defineProps({
-  value: Boolean,
-})
+const props = defineProps({value: Boolean})
+const emits = defineEmits(['update:value'])
 
 const updateValue = (beforeValue) => {
-  context.emit("update:value", beforeValue)
+  emits('update:value', beforeValue)
 }
 </script>
 

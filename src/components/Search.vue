@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, computed, withDirectives } from "vue"
+import { ref, computed } from "vue"
 import { useStore } from "vuex"
 
 const store = useStore()

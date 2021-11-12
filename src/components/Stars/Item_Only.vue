@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { reactive, defineProps } from "vue"
+import { reactive } from "vue"
 import { useStore } from "vuex"
 const store = useStore()
 
