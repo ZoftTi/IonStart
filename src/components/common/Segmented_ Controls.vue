@@ -9,18 +9,16 @@
 </template>
 
 <script setup>
-import { defineProps, useContext } from "vue";
 
 const props = defineProps({
   groupSize: Number,
   switchText: Array
 })
 
-const context = useContext()
+const emits = defineEmits(['switchSize'])
 
 const switchSize = (size) => {
-  context.emit('switchSize', size)
-  console.log(size);
+  emits('switchSize', size)
 }
 
 </script>

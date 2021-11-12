@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, reactive, ref } from "vue"
+import { computed, defineComponent, ref } from "vue"
 import { useStore } from "vuex"
 import Item from "./Stars/Item.vue"
 import draggable from "vuedraggable"
