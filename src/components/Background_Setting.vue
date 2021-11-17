@@ -1,6 +1,6 @@
 <template>
   <transition name="appear">
-    <Tab :tabAttribute="tabAttribute" v-if="background_setting.isShow">
+    <Tab :tabAttribute="tabAttribute" v-if="store.state.appStatus.background_setting">
       <div class="content">
         <div class="row custom">
           <p>自定义「 {{ fileTips }} 」</p>
@@ -119,6 +119,7 @@ export default defineComponent({
       file,
       fileTips,
       changeCustomImages,
+      store
     }
   },
 })

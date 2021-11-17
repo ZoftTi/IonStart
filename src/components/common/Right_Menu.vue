@@ -1,19 +1,7 @@
 <template>
   <transition name="elastic">
-    <div
-      class="right-menu"
-      v-if="state.menu.isShow"
-      :style="{
-        top: state.menu.top,
-        left: state.menu.left,
-      }"
-      @contextmenu.prevent
-    >
-      <div
-        class="menu-item"
-        v-for="item in state.menu.list"
-        @click="item.handler"
-      >
+    <div class="right-menu" v-if="state.menu.isShow" :style="{ top: state.menu.top, left: state.menu.left }" @contextmenu.prevent >
+      <div class="menu-item" v-for="item in state.menu.list" @click="item.handler">
         <div class="icon">
           <i class="iconfont" :class="item.icon"></i>
         </div>
@@ -83,8 +71,11 @@ document.addEventListener("click", () => {
   overflow: hidden;
 
   color: var(--primary-text-color);
-  background-color: var(--primary-background-color);
+  background-color: var(--custom-fill-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;
+
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
 
   transform-origin: left top;
   transition: transform 0.4s, top 0.4s, left 0.4s, opatity 0.4s, background-color 0.4s ease, color 0.4s ease;
@@ -100,12 +91,13 @@ document.addEventListener("click", () => {
     transition: background-color 0.25s;
 
     &:hover {
-      background-color: var(--tertiary-background-color);
+      background-color: var(--tertiary-fill-color);
     }
 
     .icon {
       display: inline-block;
       margin-right: 10px;
+      margin-top: 1px;
     }
   }
 }

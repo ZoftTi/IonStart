@@ -1,112 +1,116 @@
 <template>
   <transition name="elastic">
-    <div
-      class="edit-star"
-      v-if="state.editStars.isShow"
-      :style="{
-        top: state.editStars.top,
-        left: state.editStars.left,
-      }"
-    >
-      <div
-        class="edit-header flex-center select-none cursor-move"
-        v-drag="'UPDATE_EDIT_STARS'"
-      >
+    <div class="edit-stars" v-if="store.state.editStars.isShow" :class="{mask: editIconShow}">
+      <div class="edit-header flex-center select-none cursor-move" v-drag="{ type: 'store', content: 'UPDATE_EDIT_STARS' }" >
         <h4>编辑收藏网址</h4>
         <i class="iconfont icon-close" @click="closeEditStar"></i>
       </div>
       <div class="edit-content flex-center">
-        <input
-          type="text"
-          placeholder="网址"
-          v-model="editStarFrom.link"
-          :disabled="state.editStars.data.type == 'application'"
-        />
-        <input type="text" placeholder="标题" v-model="editStarFrom.title" />
+        <input type="text" placeholder="网址" v-model="editStarFromLink"/>
+        <input type="text" placeholder="标题" v-model="editStarFromTitle"/>
         <div class="icon_list">
           <div class="header">
-            <h4>图标设置</h4>
+            <h4>图标设置<span @click="editIconShow = true">编辑</span></h4>
           </div>
           <div class="icon_item_wrap">
-            <div
-              v-for="(item, index) in state.editStars.data.iconGroup"
-              class="icon_item flex-center"
-              :class="{ active: state.editStars.data.icon === item }"
-            >
-              <img :src="item" alt="" :key="index" @click="switchIcon(item)" />
+            <div class="icon_item flex-center icon_default_item" :class="{ active: editStarFromIconDefault.status }"  @click="switchActiveIcon('default')">
+              {{editStarFromTitle.slice(0,1)}}
+            </div>
+            <div v-for="(item, index) in store.state.editStars.data.iconGroup" class="icon_item flex-center" :class="{ active: !editStarFromIconDefault.status && editStarFromIcon == item}" @click="switchActiveIcon(item)">
+              <img :src="item" alt="" :key="index"/>
             </div>
           </div>
         </div>
       </div>
       <div class="edit-footer flex-center">
-        <input type="button" value="保存" @click="saveEditStar" />
+        <input type="button" value="保存" @click="saveEditStars"/>
+      </div>
+      <div class="edit_default_icon">
+        <EditDefaultIcon :iconDefault="editStarFromIconDefault" :editIconShow="editIconShow" @updateIconDefault="updateIconDefault" @closeEditIcon="editIconShow = !editIconShow"/>
       </div>
     </div>
   </transition>
 </template>
 
 <script setup>
-import { computed, watch, reactive } from "vue"
+import { computed, ref } from "vue"
 import { useStore } from "vuex"
+import EditDefaultIcon from "./EditStars/EditDefaultIcon.vue"  
 
 const store = useStore()
-const state = store.state
 
-let editStarFrom = reactive({
-  link: "",
-  title: "",
-  icon: "",
-})
-
-if (editStarFrom.icon == "") {
-  watch(
-    computed(() => state.editStars.data),
-    () => {
-      editStarFrom.link = state.editStars.data.link
-      editStarFrom.title = state.editStars.data.title
+const bindState = (getObjectKey) => {
+  return computed({
+    get() {
+      return store.state.editStars.data[getObjectKey]
+    },
+    set(value) {
+      store.commit("UPDATE_EDIT_STARS", {
+        data: {
+          [getObjectKey] : value
+        }
+      })
     }
-  )
+  })
 }
 
-const switchIcon = (iconUrl) => {
-  if (iconUrl) {
-    editStarFrom.icon = iconUrl
-    store.commit("UPDATE_EDIT_STARS", {
-      data: {
-        title: state.editStars.data.title,
-        icon: iconUrl,
-        iconGroup: state.editStars.data.iconGroup,
-        link: state.editStars.data.link,
-      },
-    })
+let editStarFromLink = bindState('link')
+let editStarFromTitle = bindState('title')
+let editStarFromIcon = bindState('icon')
+let editStarFromIconDefault = bindState('iconDefault')
+
+const editIconShow = ref(false)
+const updateIconDefault = (iconDefault) => {
+  store.commit("UPDATE_EDIT_STARS", {
+    data: { iconDefault }
+  })
+}
+
+const switchActiveIcon = (afterIcon) => {
+  switch (afterIcon) {
+    case 'default':
+      store.commit("UPDATE_EDIT_STARS", {
+        data: { iconDefault : { status: true } }
+      })
+      break;
+  
+    default:
+      store.commit("UPDATE_EDIT_STARS", {
+        data: { iconDefault : { status: false } }
+      })
+      editStarFromIcon.value = afterIcon
+      break;
   }
 }
 
 const closeEditStar = () => {
-  store.commit("UPDATE_EDIT_STARS", {
-    isShow: false,
+  store.commit('UPDATE_EDIT_STARS', {
+    isShow: false
   })
 }
 
-const saveEditStar = () => {
-  console.log(editStarFrom)
+const saveEditStars = () => {
   store.commit("UPDATE_STAR_DATA", {
-    dataIndex: state.editStars.dataIndex,
+    dataIndex: store.state.editStars.dataIndex,
     star: {
-      link: editStarFrom.link,
-      icon: editStarFrom.icon,
-      title: editStarFrom.title,
+      link: editStarFromLink.value,
+      icon: editStarFromIcon.value,
+      title: editStarFromTitle.value,
+      iconDefault: editStarFromIconDefault.value
     },
   })
   closeEditStar()
 }
+
+
+
 </script>
 
 <style lang="less" scoped>
-.edit-star {
+.edit-stars {
   position: absolute;
-  left: 691px;
-  top: 279px;
+  left: v-bind('store.state.editStars.left');
+  top: v-bind('store.state.editStars.top');
   width: 250px;
   border-radius: 12px;
   padding: 15px 20px;
@@ -121,6 +125,20 @@ const saveEditStar = () => {
     background-color 0.4s ease, color 0.4s ease;
 
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 12px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.4s ease, visibility 0.4s ease;;
+    visibility: hidden;
+  }
 
   .edit-header {
     height: 20px;
@@ -169,41 +187,46 @@ const saveEditStar = () => {
         h4 {
           font-size: 14px;
           margin: 0;
+
+          span {
+            font-size: 12px;
+            display: inline-block;
+            padding-left: 5px;
+            color: var(--secondary-text-color);
+            cursor: pointer;
+          }
         }
       }
 
       .icon_item_wrap {
         width: 100%;
-        max-height: 105px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        overflow-y: scroll;
+        max-height: 110px;
 
-        .icon_item:nth-child(1),
-        .icon_item:nth-child(5),
-        .icon_item:nth-child(9),
-        .icon_item:nth-child(13),
-        .icon_item:nth-child(17) {
-          margin-left: 0;
-        }
+        display: grid;
+        grid-template-columns: repeat(4, 21%);
+        justify-content: space-between;
+        grid-row-gap: 15px;
+        margin-bottom: 10px;
 
         .icon_item {
-          width: 21%;
+          width: 100%;
           overflow: hidden;
           cursor: pointer;
-          margin-left: 10px;
-          margin-bottom: 12px;
           position: relative;
-          border-radius: 7.425px;
           transition: all 0.2s ease;
+          border-radius: 7px;
 
           background-color: var(--tertiary-background-color);
 
           img {
             width: 100%;
           }
+        }
+
+        .icon_default_item {
+          font-size: 18px;
+          color: v-bind('editStarFromIconDefault.color');
+          background-color: v-bind('editStarFromIconDefault.themeColor');
         }
 
         .active::before {
@@ -234,6 +257,13 @@ const saveEditStar = () => {
     }
   }
 
+  .edit_default_icon {
+    position: absolute;
+    top: 60px;
+    right: -50px;
+    z-index: 110;
+  }
+
   .edit-footer {
     bottom: 20px;
     justify-content: flex-end;
@@ -251,5 +281,10 @@ const saveEditStar = () => {
       margin-left: 10px;
     }
   }
+}
+
+.mask::before {
+  visibility: visible;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

@@ -1,80 +1,31 @@
 <template>
   <transition name="elastic">
-    <div
-      class="edit-group"
-      v-if="state.editGroup.isShow"
-      :style="{
-        left: state.editGroup.left,
-        top: state.editGroup.top,
-      }"
-    >
-      <div
-        class="edit-header flex-center select-none cursor-move"
-        v-drag="'UPDATE_EDIT_GROUP'"
-      >
+    <div class="edit-group" v-if="state.editGroup.isShow" :style="{ left: state.editGroup.left, top: state.editGroup.top }">
+      <div class="edit-header flex-center select-none cursor-move" v-drag="{ type: 'store', content: 'UPDATE_EDIT_GROUP' }">
         <h4>编辑组样式</h4>
         <i class="iconfont icon-close" @click="closeEditGroup"></i>
       </div>
       <div class="edit-content flex-center">
         <div class="group-size">
           <div class="header"><h4>大小</h4></div>
-          <SegmentedControls
-            :switchText="switchText"
-            :groupSize="groupSize"
-            @switchSize="switchSize"
-          />
+          <SegmentedControls :switchText="switchText" :groupSize="groupSize" @switchSize="switchSize"/>
         </div>
         <div class="group-stars-order">
           <div class="header">
             <h4>收藏网址管理</h4>
           </div>
-          <div
-            class="stars-list"
-            :style="{ height: starListAttr.isOpen ? '182px' : '32px' }"
-          >
-            <div
-              class="list-header"
-              :style="{
-                background: starListAttr.isOpen ? 'white' : 'none',
-                color: starListAttr.isOpen
-                  ? 'black'
-                  : 'var(--primary-text-color)',
-              }"
-            >
+          <div class="stars-list" :style="{ height: starListAttr.isOpen ? '182px' : '32px' }">
+            <div class="list-header" :style="{ background: starListAttr.isOpen ? 'white' : 'none', color: starListAttr.isOpen ? 'black' : 'var(--primary-text-color)'}">
               <h4>#组名称</h4>
               <span>
-                <i
-                  class="iconfont icon-refresharrow i-rotate"
-                  v-if="starListAttr.isControl"
-                  @click="starUp"
-                ></i>
-                <i
-                  class="iconfont icon-refresharrow"
-                  v-if="starListAttr.isControl"
-                  @click="starDown"
-                ></i>
-                <i
-                  class="iconfont icon-close"
-                  v-if="starListAttr.isControl"
-                  @click="removeStar"
-                ></i>
-                <i
-                  class="iconfont icon-unfold"
-                  :class="{ 'i-rotate': starListAttr.isOpen }"
-                  @click="switchStarList"
-                ></i>
+                <i class="iconfont icon-refresharrow i-rotate" v-if="starListAttr.isControl" @click="starUp"></i>
+                <i class="iconfont icon-refresharrow" v-if="starListAttr.isControl" @click="starDown"></i>
+                <i class="iconfont icon-close" v-if="starListAttr.isControl" @click="removeStar"></i>
+                <i class="iconfont icon-unfold" :class="{ 'i-rotate': starListAttr.isOpen }" @click="switchStarList"></i>
               </span>
             </div>
             <div class="list-content">
-              <div
-                class="row"
-                v-for="(item, index) in state.stars[
-                  store.state.editGroup.groupIndex
-                ].data"
-                :key="index"
-                :class="{ active: listActive == index }"
-                @click="switchActive(index)"
-              >
+              <div class="row" v-for="(item, index) in state.stars[store.state.editGroup.groupIndex].data" :key="index" :class="{ active: listActive == index }" @click="switchActive(index)">
                 <div class="icon">
                   <img :src="item.icon" alt="" />
                 </div>
@@ -134,8 +85,7 @@ const removeStar = () => {
 
 const starUp = () => {
   if (listActive.value != 0) {
-    let temp =
-      state.stars[state.editGroup.groupIndex].data[listActive.value - 1]
+    let temp = state.stars[state.editGroup.groupIndex].data[listActive.value - 1]
     store.commit("REPLACE_STAR_DATA", {
       targetIndex: {
         groupIndex: state.editGroup.groupIndex,
@@ -161,8 +111,7 @@ const starDown = () => {
     listActive.value !=
     state.stars[state.editGroup.groupIndex].data.length - 1
   ) {
-    let temp =
-      state.stars[state.editGroup.groupIndex].data[listActive.value + 1]
+    let temp = state.stars[state.editGroup.groupIndex].data[listActive.value + 1]
     store.commit("REPLACE_STAR_DATA", {
       targetIndex: {
         groupIndex: state.editGroup.groupIndex,
@@ -190,9 +139,7 @@ watch(listActive, (count, prevCount) => {
   }
 })
 
-watch(
-  computed(() => state.editGroup.top),
-  () => {
+watch(computed(() => state.editGroup.top), () => {
     groupSize.value = state.stars[state.editGroup.groupIndex].size
   }
 )
@@ -201,7 +148,6 @@ const closeEditGroup = () => {
   store.commit("UPDATE_EDIT_GROUP", {
     isShow: false,
   })
-  console.log(state.editGroup.isShow)
 }
 </script>
 

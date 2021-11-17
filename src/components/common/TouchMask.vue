@@ -1,7 +1,6 @@
 <template>
-  <div
-    class="touch-mask" v-right-click="rightMenuObj">
-    <img :src="background_setting.background_url" alt="">
+  <div class="touch-mask" v-right-click="rightMenuObj">
+    <img :src="background_setting.background_url" alt="" />
   </div>
 </template>
 
@@ -32,6 +31,43 @@ const rightMenuObj = reactive({
           top: judgeY(e.clientY),
           left: e.clientX - 125 + "px",
           groupIndex: false,
+        })
+      },
+    },
+    {
+      text: "刷新",
+      icon: "icon-refresh",
+      handler: () => {
+        window.location.reload()
+      },
+    },
+    {
+      text: "设置",
+      icon: "icon-settings",
+      handler: () => {
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: "setting",
+          isShow: true,
+        })
+      },
+    },
+    {
+      text: "背景设置",
+      icon: "icon-beijingtupian",
+      handler: () => {
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: "background_setting",
+          isShow: true,
+        })
+      },
+    },
+    {
+      text: "图标设置",
+      icon: "icon-biaoshi",
+      handler: () => {
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: "setstars_icons",
+          isShow: true,
         })
       },
     },

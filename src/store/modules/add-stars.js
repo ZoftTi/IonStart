@@ -9,20 +9,11 @@ export default {
   },
   mutations: {
     UPDATE_ADD_STARS: (state, AddStarInfo) => {
-      state.isShow =
-        AddStarInfo.isShow == undefined
-          ? state.isShow
-          : AddStarInfo.isShow
-      state.title =
-        AddStarInfo.title == undefined ? state.title : AddStarInfo.title
-      state.top =
-        AddStarInfo.top == undefined ? state.top : AddStarInfo.top
-      state.left =
-        AddStarInfo.left == undefined ? state.left : AddStarInfo.left
-      state.groupIndex =
-        AddStarInfo.groupIndex == undefined
-          ? state.groupIndex
-          : AddStarInfo.groupIndex
+      state.isShow = AddStarInfo.isShow == undefined ? state.isShow : AddStarInfo.isShow
+      state.title = AddStarInfo.title == undefined ? state.title : AddStarInfo.title
+      state.top = AddStarInfo.top == undefined ? state.top : AddStarInfo.top
+      state.left = AddStarInfo.left == undefined ? state.left : AddStarInfo.left
+      state.groupIndex = AddStarInfo.groupIndex == undefined ? state.groupIndex : AddStarInfo.groupIndex
     },
   },
 }

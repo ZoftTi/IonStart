@@ -1,65 +1,28 @@
 <template>
   <transition name="elastic">
-    <div
-      class="add-star"
-      v-if="state.addStars.isShow"
-      :style="{
-        top: state.addStars.top,
-        left: state.addStars.left,
-      }"
-    >
-      <div
-        class="edit-header flex-center select-none cursor-move"
-        v-drag="'UPDATE_ADD_STARS'"
-      >
-        <h4>
-          添加收藏网址<span v-if="state.addStars.title"
-            >({{ state.addStars.title }})</span
-          >
+    <div class="add-star" v-if="state.addStars.isShow" :style="{ top: state.addStars.top, left: state.addStars.left,}">
+      <div class="edit-header flex-center select-none cursor-move" v-drag="{ type: 'store', content: 'UPDATE_ADD_STARS'}">
+        <h4> 添加收藏网址<span v-if="state.addStars.title" >({{ state.addStars.title }})</span>
         </h4>
         <i class="iconfont icon-close" @click="closeAddStar"></i>
       </div>
       <div class="edit-content flex-center">
-        <input
-          type="text"
-          placeholder="网址"
-          v-model="addStarFrom.link"
-          @input="resetFrom"
-        />
-        <input
-          type="text"
-          placeholder="标题( 为空可自动获取 )"
-          v-model="addStarFrom.title"
-          @input="resetFrom"
-        />
+        <input type="text" placeholder="网址" v-model="addStarFrom.link" @input="resetFrom"/>
+        <input type="text" placeholder="标题( 为空可自动获取 )" v-model="addStarFrom.title" @input="resetFrom" />
         <div class="default_app">
           <div class="header">
             <h4>添加默认应用</h4>
           </div>
           <div class="app_wrap">
-            <div
-              class="app_item flex-center"
-              :class="{ active: addStarFrom.link === item.link }"
-              v-for="(item, index) in state.app"
-            >
-              <img
-                :src="item.icon"
-                alt=""
-                :key="index"
-                @click="appClick(item)"
-              />
+            <div class="app_item flex-center" :class="{ active: addStarFrom.link === item.link }" v-for="(item, index) in state.app" >
+              <img :src="item.icon" alt="" :key="index" @click="appClick(item)" />
             </div>
           </div>
         </div>
       </div>
       <div class="edit-footer flex-center">
         <span>( {{ tips }} )</span>
-        <input
-          type="button"
-          :class="{ loading: loadingStatus }"
-          value="添加"
-          @click="saveAddStar"
-        />
+        <input type="button" :class="{ loading: loadingStatus }" value="添加" @click="saveAddStar" />
       </div>
     </div>
   </transition>
@@ -102,6 +65,7 @@ const saveAddStar = () => {
         title: addStarFrom.title,
         icon: addStarFrom.icon,
         iconGroup: addStarFrom.iconGroup,
+        iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
       },
     })
     closeAddStar()
@@ -124,6 +88,7 @@ const saveAddStar = () => {
               addStarFrom.title != "" ? addStarFrom.title : response.data.title,
             icon: response.data.icons[0],
             iconGroup: response.data.icons,
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
           },
         })
         closeAddStar()

@@ -1,6 +1,6 @@
 <template>
   <transition name="appear">
-    <Tab :tabAttribute="tabAttribute" v-if="state.setting.isShow">
+    <Tab :tabAttribute="tabAttribute" v-if="state.appStatus.setting">
       <div class="row_wrap" id="account">
         <div class="head flex-center">
           <img src="../assets/head_shot.jpg" alt="" />
@@ -113,14 +113,12 @@
           <Switch v-model:value="stars_scale" />
         </div>
         <div class="row">
+          <span>在新标签页打开收藏网址</span>
+          <Switch v-model:value="stars_target" />
+        </div>
+        <div class="row">
           <span>收藏栏圆角半径 ( {{ stars_radius }} )</span>
-          <input
-            type="range"
-            min="0"
-            max="16"
-            class="range-half"
-            v-model="stars_radius"
-          />
+          <input type="range" min="0" max="16" class="range-half" v-model="stars_radius" />
         </div>
       </div>
     </Tab>
@@ -184,6 +182,7 @@ const stars_hidden = bindSettingData("stars_attribute", "stars_hidden")
 const stars_distance = bindSettingData("stars_attribute", "stars_distance")
 const stars_radius = bindSettingData("stars_attribute", "stars_radius")
 const stars_scale = bindSettingData("stars_attribute", "stars_scale")
+const stars_target = bindSettingData("stars_attribute", "stars_target")
 
 const tabAttribute = reactive({
   style: {
