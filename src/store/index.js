@@ -182,6 +182,7 @@ const store = createStore({
         state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].title = starData.star.title
       }
       if (starData.star.iconDefault !== "") {
+        console.log(starData.star.iconDefault);
         state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].iconDefault = starData.star.iconDefault
       }
     },

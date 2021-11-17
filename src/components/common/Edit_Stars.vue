@@ -69,14 +69,23 @@ const updateIconDefault = (iconDefault) => {
 const switchActiveIcon = (afterIcon) => {
   switch (afterIcon) {
     case 'default':
+      console.log('true defaultIcon', editStarFromIconDefault.value);
       store.commit("UPDATE_EDIT_STARS", {
-        data: { iconDefault : { status: true } }
+        data: { 
+          iconDefault : {
+            status: true, color: editStarFromIconDefault.value.color, themeColor: editStarFromIconDefault.value.themeColor
+          }
+        }
       })
       break;
   
     default:
       store.commit("UPDATE_EDIT_STARS", {
-        data: { iconDefault : { status: false } }
+        data: { 
+          iconDefault : {
+            status: false, color: editStarFromIconDefault.value.color, themeColor: editStarFromIconDefault.value.themeColor
+          }
+        }
       })
       editStarFromIcon.value = afterIcon
       break;
