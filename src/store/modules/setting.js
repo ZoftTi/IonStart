@@ -1,7 +1,6 @@
 export default {
   state: {
     // 设置属性
-    isShow: false,
     clearInput: false,
     focusInput: false,
     target_blank: false,
@@ -24,7 +23,8 @@ export default {
       stars_hidden: false,
       stars_distance: 475,
       stars_radius: 15,
-      stars_scale: true
+      stars_scale: true,
+      stars_target: false
     }
   },
   mutations: {

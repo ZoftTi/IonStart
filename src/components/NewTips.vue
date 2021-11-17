@@ -7,26 +7,10 @@
             <div class="header_title">
               迭代日志
               <span class="operation_new_tips">
-                「
-                <span @click="switchNewTips(newTipsArray.length - 1)"
-                  >最新</span
+                「<span @click="switchNewTips(newTipsArray.length - 1)">最新</span>
+                <span v-if="newTipsArray.length > 1 && newTipsIndex > 0" @click="switchNewTips(newTipsIndex - 1)"> | 前</span
                 >
-                <span
-                  v-if="newTipsArray.length > 1 && newTipsIndex > 0"
-                  @click="switchNewTips(newTipsIndex - 1)"
-                >
-                  | 前</span
-                >
-                <span
-                  v-if="
-                    newTipsArray.length > 1 &&
-                    newTipsIndex < newTipsArray.length - 1
-                  "
-                  @click="switchNewTips(newTipsIndex + 1)"
-                >
-                  | 后</span
-                >
-                」
+                <span v-if="newTipsArray.length > 1 && newTipsIndex < newTipsArray.length - 1" @click="switchNewTips(newTipsIndex + 1)"> | 后</span>」
               </span>
             </div>
             <div class="line"></div>
@@ -94,6 +78,22 @@ export default defineComponent({
           "增加了收藏网址栏拖拽排序功能",
         ],
       },
+      {
+        tags: ["Vue", "新功能", "更新", "修Bug"],
+        time: "2021.11.17",
+        version: "1.3.0",
+        text: [
+          "2021.11.17 上线",
+          "给收藏网址添加默认图标",
+          "修改夜间模式的自动跟随系统逻辑",
+          "右键菜单添加了刷新、设置、背景设置、图片设置",
+          "在设置添加了新标签页打开收藏网页选项",
+          "application 页面滚动时按钮常驻",
+          "修复了Ctrl+ 点击收藏网页无效",
+          "将右键菜单背景颜色改为毛玻璃效果",
+          "更改设置、背景设置、图标设置等应用的默认图标",
+        ],
+      },
     ])
 
     const newTipsIndex = ref(newTipsArray.length - 1)
@@ -139,10 +139,14 @@ export default defineComponent({
     opacity: 1;
     transform: scale(1);
   }
+  30% {
+    width: 10px;
+    transform: scale(1.1);
+  }
   100% {
     width: 0;
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.8);
     color: rgba(0, 0, 0, 0);
   }
 }
@@ -225,7 +229,7 @@ export default defineComponent({
           line-height: 30px;
           border-radius: 4px;
           margin: 0 4px;
-
+          
           background-color: var(--tertiary-background-color);
           transition: background-color 0.4s ease;
           -webkit-transition: background-color 0.4s ease;
@@ -234,6 +238,8 @@ export default defineComponent({
     }
 
     .content {
+      max-height: 260px;
+      overflow-y: scroll;
       margin: 20px auto;
       text-align: center;
 

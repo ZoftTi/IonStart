@@ -1,40 +1,40 @@
 <template>
   <div class="item-only" v-right-click="rightMenuObj">
-    <a :href="data.link" @click.prevent="jumpLink(data)">
+    <a :href="data.link" @click="clickLink(data)">
       <div class="item-top flex-center">
-        <img :src="data.icon" alt="" data-groupindex="1" data-index="0" />
+        <div class="icon-box" v-if="data.iconDefault.status" :style="{ color: data.iconDefault.color, background: data.iconDefault.themeColor }">
+          {{ data.title.slice(0,1) }}
+        </div>
+        <img class="icon-box-img" :src="data.icon" alt="" v-else/>
       </div>
       <div class="item-bottom">
-        <h4>
-          {{ data.title }}
-        </h4>
+        <h4>{{ data.title }}</h4>
       </div>
     </a>
   </div>
 </template>
 
 <script setup>
-import { reactive } from "vue"
+import { isRef, reactive } from "vue"
 import { useStore } from "vuex"
-const store = useStore()
 
+const store = useStore()
 const props = defineProps({
   data: Object,
   groupIndex: Number,
 })
 
-const jumpLink = (data) => {
-  if (data.type === "application") {
-    store.commit("CHANGE_APP_STATUS", {
-      appKey: data.link,
-      isShow: true,
-    })
-    return false
-  } else {
-    window.open(
-      data.link,
-      store.state.setting.target_blank ? "_blank" : "_self"
-    )
+const clickLink = (item) => {
+  if (item.type) {
+    switch (item.type) {
+      case "application":
+        window.event.preventDefault()
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: item.link,
+          isShow: true,
+        })
+        break
+    }
   }
 }
 
@@ -44,7 +44,6 @@ const rightMenuObj = reactive({
       text: "编辑",
       icon: "icon-edit",
       handler: (e) => {
-        console.log(props.data)
         store.commit("UPDATE_EDIT_STARS", {
           isShow: true,
           top: e.clientY - 300 + "px",
@@ -55,6 +54,7 @@ const rightMenuObj = reactive({
           },
           data: props.data,
         })
+        
       },
     },
     {
@@ -97,9 +97,27 @@ const rightMenuObj = reactive({
       height: 70%;
       padding-top: 10%;
 
-      img {
+      .icon-box-img {
         width: 45px;
+        height: 45px;
         border-radius: 7px;
+      }
+
+      .icon-box {
+        width: 45px;
+        height: 45px;
+        border-radius: 7px;
+        font-size: 18px;
+        color: white;
+        background-color: #dd3570;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-decoration: none;
+        text-overflow: ellipsis;
       }
     }
 
@@ -118,7 +136,7 @@ const rightMenuObj = reactive({
         overflow: hidden;
         text-decoration: none;
         text-overflow: ellipsis;
-        
+
         color: var(--secondary-text-color);
 
         transition: color 0.4s ease;

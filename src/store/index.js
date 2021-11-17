@@ -11,7 +11,7 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: "LocalData",
-      paths: ["newTips", "searchIndex", "stars", "setting", "background_setting"],
+      paths: ["newTips", "searchIndex", "stars", "setting", "background_setting.background_url", "background_setting.custom_background" ],
     }),
   ],
   state: {
@@ -37,26 +37,39 @@ const store = createStore({
       {
         type: "application",
         title: "设置",
-        icon: "images/setting-filling.png",
+        icon: "images/appIcons/setting.png",
+        iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
         iconGroup: [
-          "/images/setting-filling.png",
-          "/images/Setting-icon.png",
-          "/images/setting.png",
+          "/images/appIcons/setting.png",
         ],
         link: "Setting",
       },
       {
         type: "application",
         title: "背景设置",
-        icon: "/images/mountain-range-on-black-background.png",
+        icon: "/images/appIcons/picture.png",
+        iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
         iconGroup: [
-          "/images/Setting-icon.png",
-          "/images/setting-filling.png",
-          "/images/mountain-range-on-black-background.png",
+          "/images/appIcons/picture.png",
         ],
         link: "Background_Setting",
       },
+      {
+        type: "application",
+        title: "图标设置",
+        icon: "/images/appIcons/upload.png",
+        iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
+        iconGroup: [
+          "/images/appIcons/upload.png",
+        ],
+        link: "SetStars_Icons",
+      },
     ],
+    appStatus: {
+      setting: false,
+      setstars_icons: false,
+      background_setting: false
+    },
     // 列表
     stars: [
       {
@@ -66,6 +79,7 @@ const store = createStore({
             link: "https://www.bilibili.com/",
             title: "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
             icon: "https://images.zoft.work/images/bilibili-icon.jpg",
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
             iconGroup: [
               "https://www.bilibili.com/favicon.ico",
               "https://images.zoft.work/images/bilibili-icon.jpg",
@@ -78,12 +92,10 @@ const store = createStore({
         data: [
           {
             link: "https://dribbble.com/",
-            title:
-              "Dribbble - Discover the World’s Top Designers & Creative Professionals",
+            title: "Dribbble - Discover the World’s Top Designers & Creative Professionals",
             icon: "https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4d640ee48ab2a15a26b.ico",
-            iconGroup: [
-              "https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4d640ee48ab2a15a26b.ico",
-            ],
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
+            iconGroup: ["https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4d640ee48ab2a15a26b.ico",],
           },
         ],
       },
@@ -94,6 +106,7 @@ const store = createStore({
             link: "https://tools.miku.ac/",
             title: "MikuTools - 一个轻量的工具集合",
             icon: "https://tools.miku.ac/favicon.ico",
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
             iconGroup: ["https://tools.miku.ac/favicon.ico"],
           },
         ],
@@ -105,9 +118,8 @@ const store = createStore({
             link: "https://juejin.cn/",
             title: "掘金 - 代码不止，掘金不停",
             icon: "https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png",
-            iconGroup: [
-              "https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png",
-            ],
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
+            iconGroup: ["https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png",],
           },
         ],
       },
@@ -118,6 +130,7 @@ const store = createStore({
             link: "https://gitee.com/",
             title: "Gitee - 基于 Git 的代码托管和研发协作平台",
             icon: "https://gitee.com/assets/favicon.ico",
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
             iconGroup: ["https://gitee.com/assets/favicon.ico"],
           },
         ],
@@ -129,22 +142,20 @@ const store = createStore({
             type: "application",
             link: "Setting",
             title: "设置",
-            icon: "/images/setting-filling.png",
+            icon: "/images/appIcons/setting.png",
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
             iconGroup: [
-              "/images/setting-filling.png",
-              "/images/Setting-icon.png",
-              "/images/setting.png",
+              "/images/appIcons/setting.png",
             ],
           },
           {
             type: "application",
             link: "Background_Setting",
             title: "背景设置",
-            icon: "/images/mountain-range-on-black-background.png",
+            icon: "/images/appIcons/picture.png",
+            iconDefault: { status: false, color: 'white', themeColor: '#5aa1d4' },
             iconGroup: [
-              "/images/Setting-icon.png",
-              "/images/setting-filling.png",
-              "/images/mountain-range-on-black-background.png",
+              "/images/appIcons/picture.png",
             ],
           },
         ],
@@ -162,25 +173,20 @@ const store = createStore({
     },
     UPDATE_STAR_DATA: (state, starData) => {
       if (starData.star.link !== "") {
-        state.stars[starData.dataIndex.groupIndex].data[
-          starData.dataIndex.itemIndex
-        ].link = starData.star.link
+        state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].link = starData.star.link
       }
       if (starData.star.icon !== "") {
-        state.stars[starData.dataIndex.groupIndex].data[
-          starData.dataIndex.itemIndex
-        ].icon = starData.star.icon
+        state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].icon = starData.star.icon
       }
       if (starData.star.title !== "") {
-        state.stars[starData.dataIndex.groupIndex].data[
-          starData.dataIndex.itemIndex
-        ].title = starData.star.title
+        state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].title = starData.star.title
+      }
+      if (starData.star.iconDefault !== "") {
+        state.stars[starData.dataIndex.groupIndex].data[starData.dataIndex.itemIndex].iconDefault = starData.star.iconDefault
       }
     },
     REPLACE_STAR_DATA: (state, replaceStar) => {
-      state.stars[replaceStar.targetIndex.groupIndex].data[
-        replaceStar.targetIndex.itemIndex
-      ] = replaceStar.replaceStar
+      state.stars[replaceStar.targetIndex.groupIndex].data[replaceStar.targetIndex.itemIndex] = replaceStar.replaceStar
     },
     REMOVE_STAR_DATA: (state, dataIndex) => {
       if (dataIndex.itemIndex !== false) {
@@ -191,31 +197,21 @@ const store = createStore({
     },
     ADD_STAR_DATA: (state, starData) => {
       if (starData.groupIndex === false) {
-        let temp = {
-          size: 2,
-          data: [starData.starItem],
-        }
+        let temp = { size: 2, data: [starData.starItem] }
         state.stars.push(temp)
       } else {
         state.stars[starData.groupIndex].data.push(starData.starItem)
       }
     },
     CHANGE_APP_STATUS: (state, beforeData) => {
-      state[beforeData.appKey.toLowerCase()].isShow = beforeData.isShow
+      state.appStatus[beforeData.appKey.toLowerCase()] = beforeData.isShow
     },
     TOGGLE_NEWTIPS: (state, value) => {
       state.newTips = value || !state.newTips
     },
     REPLACE_STAR_ORDER: (state, starsIndex) => {
-      // let tamp = state.stars[starsIndex.oldItemIndex]
-
-      // state.stars[starsIndex.oldItemIndex] = state.stars[starsIndex.newItemIndex]
-      // state.stars[starsIndex.newItemIndex] = tamp
-      // // console.log(state.stars[starsIndex.oldItemIndex]);
-      // console.log(starsIndex.newItemIndex, starsIndex.oldItemIndex);
-
       state.stars = starsIndex
-    }
+    },
   },
   actions: {},
   modules: {

@@ -1,45 +1,35 @@
 <template>
-  <div
-    class="item-many"
-    :style="{ 'flex-direction': data.length <= 3 ? 'row' : 'column' }"
-  >
-    <a
-      v-for="(item, index) in data"
-      :href="item.link"
-      @click.prevent="jumpLink(item)"
-    >
-      <img
-        :src="item.icon"
-        :title="item.title"
-        alt=""
-        v-right-click.stop="getMenuData(item, index)"
-      />
+  <div class="item-many" :style="{ 'flex-direction': data.length <= 3 ? 'row' : 'column' }">
+    <a v-for="(item, index) in data" :href="item.link" @click="clickLink(item)">
+      <div class="icon-box" v-if="item.iconDefault.status" v-right-click.stop="getMenuData(item, index)" :style="{ color: item.iconDefault.color, background: item.iconDefault.themeColor }">
+        {{ item.title.slice(0,1) }}
+      </div>
+      <img :src="item.icon" :title="item.title" class="icon-box" v-else v-right-click.stop="getMenuData(item, index)" alt="" />
     </a>
   </div>
 </template>
 
 <script setup>
-import { reactive } from "vue"
+import { isProxy, markRaw, reactive } from "vue"
 import { useStore } from "vuex"
-const store = useStore()
 
+const store = useStore()
 const props = defineProps({
   data: Array,
   groupIndex: Number,
 })
 
-const jumpLink = (data) => {
-  if (data.type === "application") {
-    store.commit("CHANGE_APP_STATUS", {
-      appKey: data.link,
-      isShow: true,
-    })
-    return false
-  } else {
-    window.open(
-      data.link,
-      store.state.setting.target_blank ? "_blank" : "_self"
-    )
+const clickLink = (item) => {
+  if (item.type) {
+    switch (item.type) {
+      case "application":
+        window.event.preventDefault()
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: item.link,
+          isShow: true,
+        })
+        break
+    }
   }
 }
 
@@ -50,8 +40,6 @@ const getMenuData = (item, itemIndex) => {
         text: "编辑",
         icon: "icon-edit",
         handler: (e) => {
-          console.log(item)
-          console.log(itemIndex, props.groupIndex)
           store.commit("UPDATE_EDIT_STARS", {
             isShow: true,
             top: e.clientY - 300 + "px",
@@ -136,14 +124,25 @@ const getMenuData = (item, itemIndex) => {
     margin-top: 13px;
     position: relative;
     transition: transform 0.2s;
+    text-decoration: none;
 
     &:hover {
       transform: scale(1.05);
     }
 
-    img {
-      width: 100%;
-      border-radius: 7.425px;
+    .icon-box {
+      width: 45px;
+      height: 45px;
+      border-radius: 7px;
+      font-size: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-decoration: none;
+      text-overflow: ellipsis;
     }
   }
 }
