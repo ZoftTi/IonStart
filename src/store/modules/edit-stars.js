@@ -29,15 +29,15 @@ export default {
       }
       if (beforeData.data != undefined) {
         Object.keys(beforeData.data).forEach((key) => {
-          if (key === "iconDefault") {
-            let obj = state.data.iconDefault
-            Object.keys(beforeData.data.iconDefault).forEach((k) => {
-              obj[k] = beforeData.data.iconDefault[k]  
-            })
-            state.data[key] = markRaw({ ...obj })
-          } else {
+        //   if (key === "iconDefault") {
+        //     let obj = state.data.iconDefault
+        //     Object.keys(beforeData.data.iconDefault).forEach((k) => {
+        //       obj[k] = beforeData.data.iconDefault[k]  
+        //     })
+        //     // state.data[key] = markRaw({ ...obj })
+        //   } else {
             state.data[key] = beforeData.data[key]
-          }
+          // }
         })
       }
     },
