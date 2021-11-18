@@ -36,22 +36,15 @@ jobs:
         run: |
           yarn build
           
-      # - name: Deploy 🚀
-      #   uses: easingthemes/ssh-deploy@v2.2.11
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-      #     ARGS: "-rltgoDzvO --delete"
-      #     SOURCE: "dist/"
-      #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
-      #     TARGET: ${{ secrets.REMOTE_TARGET }}
-      #     EXCLUDE: "/dist/, /node_modules/"
-
       - name: Deploy 🚀
-        uses: up9cloud/action-rsync@v1.3
+        uses: easingthemes/ssh-deploy@v2.2.11
         env:
-          HOST: ${{ secrets.REMOTE_HOST }}
-          RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
-          TARGET: ./dist/
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "/dist/, /node_modules/"
 
       
