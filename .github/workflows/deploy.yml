@@ -47,7 +47,7 @@ jobs:
       #     TARGET: ${{ secrets.REMOTE_TARGET }}
       #     EXCLUDE: "/dist/, /node_modules/"
 
-      - name: name: Deploy 🚀
+      - name: Deploy 🚀
         uses: up9cloud/action-rsync@v1.3
         env:
           HOST: ${{ secrets.REMOTE_HOST }}
