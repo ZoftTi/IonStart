@@ -30,11 +30,11 @@ jobs:
 #           cache: 'npm'
           
       - name: Install 🔧
-        run: npm install
+        run: yarn
       
       - name: Build 🪛
         run: |
-          npm run build
+          yarn build
           
       - name: Deploy 🚀
         uses: easingthemes/ssh-deploy@v2.2.11
