@@ -108,10 +108,8 @@ export default defineComponent({
       const version = ref(window.localStorage.getItem("version"))
       
       if (version.value === null || version.value < newTipsArray[newTipsArray.length - 1].version) {
-        window.localStorage.setItem(
-          "version",
-          newTipsArray[newTipsArray.length - 1].version
-        )
+        window.localStorage.setItem("version", newTipsArray[newTipsArray.length - 1].version)
+        window.localStorage.setItem('oldVersionData', window.localStorage.getItem('LocalData'))
         store.commit("TOGGLE_NEWTIPS", true)
         window.location.reload()
       }
