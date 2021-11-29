@@ -11,7 +11,16 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: "LocalData",
-      paths: ["newTips", "searchIndex", "stars", "setting", "background_setting.background_url", "background_setting.custom_background" ],
+      reducer(val) {
+        return {
+          newTips: val.newTips,
+          searchIndex: val.searchIndex,
+          stars: val.stars,
+          setting: val.setting,
+          background_url: val.background_setting.background_url,
+          custom_background: val.background_setting.custom_background,
+        }
+      }
     }),
   ],
   state: {
