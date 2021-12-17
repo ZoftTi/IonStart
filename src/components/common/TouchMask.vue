@@ -81,7 +81,7 @@ const rightMenuObj = reactive({
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 101vh;
   z-index: -1;
 
   img {
