@@ -123,11 +123,13 @@ const getMenuData = (item, itemIndex) => {
     margin-left: 13px;
     margin-top: 13px;
     position: relative;
-    transition: transform 0.2s;
+    transition: background-color 0.2s linear, transform 0.2s linear;
     text-decoration: none;
+    border-radius: 8px;
+    background-color: #ffffffcc;
 
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     .icon-box {
