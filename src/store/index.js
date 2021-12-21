@@ -41,7 +41,16 @@ const store = createStore({
         engineName: "Google",
         url: "https://www.google.com/search?q=",
       },
+      {
+        engineName: "Bili",
+        url: "https://search.bilibili.com/all?keyword=",
+      },
+      {
+        engineName: "Mdn",
+        url: "https://developer.mozilla.org/zh-CN/search?q=",
+      },
     ],
+
     app: [
       {
         type: "application",
@@ -77,7 +86,8 @@ const store = createStore({
     appStatus: {
       setting: false,
       setstars_icons: false,
-      background_setting: false
+      background_setting: false,
+      search_engines: false,
     },
     // 列表
     stars: [

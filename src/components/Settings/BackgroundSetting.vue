@@ -57,7 +57,7 @@
 <script>
 import { computed, defineComponent, reactive, ref } from "vue"
 import { useStore } from "vuex"
-import Tab from "./common/Tab_Container.vue"
+import Tab from "@/components/common/Tab_Container"
 export default defineComponent({
   components: {
     Tab,

@@ -35,7 +35,7 @@
 <script setup>
 import { reactive } from "vue"
 import { useStore } from "vuex"
-import Tab from "./common/Tab_Container.vue"
+import Tab from "@/components/common/Tab_Container"
 
 const store = useStore()
 
@@ -45,7 +45,7 @@ const tabAttribute = reactive({
     height: "480px",
   },
   title: "SetStars_Icons",
-  subTitle: "图标设置( 暂不可用 )",
+  subTitle: "图标设置「 Dev 」",
 })
 </script>
 

@@ -126,9 +126,9 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref, watch } from "vue"
-import Switch from "./common/Switch.vue"
-import Tab from "./common/Tab_Container.vue"
+import { computed, reactive } from "vue"
+import Switch from "@/components/common/Switch"
+import Tab from "@/components/common/Tab_Container"
 import { useStore } from "vuex"
 
 const store = useStore()
@@ -173,10 +173,7 @@ const show_second = bindSettingData("logo_attribute", "show_second")
 const search_hidden = bindSettingData("search_attribute", "search_hidden")
 const search_distance = bindSettingData("search_attribute", "search_distance")
 const search_radius = bindSettingData("search_attribute", "search_radius")
-const search_list_hidden = bindSettingData(
-  "search_attribute",
-  "search_list_hidden"
-)
+const search_list_hidden = bindSettingData("search_attribute", "search_list_hidden" )
 
 const stars_hidden = bindSettingData("stars_attribute", "stars_hidden")
 const stars_distance = bindSettingData("stars_attribute", "stars_distance")
