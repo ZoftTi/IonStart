@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, reactive, ref, toRef } from "vue"
+import { defineComponent, onMounted, reactive, ref } from "vue"
 import { useStore } from "vuex"
 export default defineComponent({
   name: "App",

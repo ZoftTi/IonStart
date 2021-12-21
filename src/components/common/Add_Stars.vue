@@ -165,7 +165,7 @@ const appClick = (item) => {
       outline: none;
       margin: 7px 0;
       padding: 2px 10px;
-      font-size: 10px;
+      font-size: 12px;
 
       color: var(--primary-text-color);
       background-color: var(--tertiary-background-color);

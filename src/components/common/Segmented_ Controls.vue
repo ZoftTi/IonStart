@@ -45,7 +45,7 @@ const switchSize = (size) => {
     z-index: 10;
     cursor: pointer;
     span {
-      font-size: 10px;
+      font-size: 12px;
     }
   }
 
