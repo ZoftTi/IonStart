@@ -14,7 +14,7 @@
       <div class="container">
         <div class="header" v-drag="{ type: 'tab' }">
           <h2>{{ tabAttribute.subTitle }}</h2>
-          <i class="iconfont icon-close close-tab" @click="closeTab()" />
+          <i class="iconfont icon-close2 close-tab" @click="closeTab()" />
         </div>
         <slot></slot>
       </div>

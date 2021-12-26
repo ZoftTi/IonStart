@@ -98,7 +98,6 @@ body {
   padding: 0;
   /* background-color: rgb(104, 103, 173); */
   overflow: hidden;
-  /* height: 100vh; */
 }
 
 .flex-center {
@@ -145,7 +144,11 @@ body {
 }
 
 .fade-enter-active {
-  animation: fade-in 0.4s;
+  animation: fade-in 0.2s;
+}
+
+.fade-leave-active {
+  animation: fade-in 0.2s reverse;
 }
 
 @keyframes fade-in {

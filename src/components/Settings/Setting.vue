@@ -217,6 +217,7 @@ const tabAttribute = reactive({
   display: block;
   padding-left: 12px;
   padding-bottom: 8px;
+  color: var(--primary-text-color);
 }
 
 .row_wrap {

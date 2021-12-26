@@ -1,4 +1,5 @@
 import { createStore } from "vuex"
+import { computed } from "vue"
 import createPersistedState from "vuex-persistedstate"
 import setting from "./modules/setting.js"
 import background_setting from "./modules/background-setting.js"
@@ -19,6 +20,7 @@ const store = createStore({
           setting: val.setting,
           background_url: val.background_setting.background_url,
           custom_background: val.background_setting.custom_background,
+          searchEngines: val.searchEngines
         }
       }
     }),
@@ -30,24 +32,39 @@ const store = createStore({
     // 搜索引擎
     searchEngines: [
       {
+        id: 1,
         engineName: "Bing",
         url: "https://cn.bing.com/search?q=",
+        icon: "https://images.zoft.work/images/bing-icon.jpg",
+        status: true
       },
       {
+        id: 2,
         engineName: "Baidu",
         url: "https://www.baidu.com/s?word=",
+        icon: "https://images.zoft.work/images/baidu-icon.jpg",
+        status: true
       },
       {
+        id: 3,
         engineName: "Google",
         url: "https://www.google.com/search?q=",
+        icon: "https://images.zoft.work/images/google-icon.jpg",
+        status: true
       },
       {
-        engineName: "Bili",
+        id: 4,
+        engineName: "Bilibili",
         url: "https://search.bilibili.com/all?keyword=",
+        icon: "https://images.zoft.work/images/bilibili-preview-icon.jpg",
+        status: false
       },
       {
+        id: 5,
         engineName: "Mdn",
         url: "https://developer.mozilla.org/zh-CN/search?q=",
+        icon: "https://images.zoft.work/images/mdn-icon.png",
+        status: false
       },
     ],
 
@@ -87,7 +104,7 @@ const store = createStore({
       setting: false,
       setstars_icons: false,
       background_setting: false,
-      search_engines: false,
+      search_engines: true,
     },
     // 列表
     stars: [
@@ -231,6 +248,16 @@ const store = createStore({
     REPLACE_STAR_ORDER: (state, starsIndex) => {
       state.stars = starsIndex
     },
+    CHANGE_SEARCH_ENGINSE_STATUS: (state, index) => {
+      state.searchEngines[index].status = !state.searchEngines[index].status
+    },
+    ADD_SERCH_ENGINE: (state, value) => {
+      let temp = { id: state.searchEngines.length + 1, ...value }
+      state.searchEngines.push(temp)
+    },
+    REMOVE_SEARCH_ENGINE: (state, index) => {
+      state.searchEngines.splice(index, 1)
+    }
   },
   actions: {},
   modules: {

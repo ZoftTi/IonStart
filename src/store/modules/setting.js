@@ -10,7 +10,7 @@ export default {
     logo_attribute: {
       logo_hidden: false,
       logo_distance: 125,
-      show_time: false,
+      show_time: true,
       show_second: false
     },
     search_attribute: {

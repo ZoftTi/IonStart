@@ -76,6 +76,7 @@ const tabAttribute = reactive({
     background: var(--tertiary-background-color);
     color: var(--primary-text-color);
     transition: color 0.4s ease, background-color 0.4s ease;
+    font-size: 14px;
   }
 }
 
@@ -107,6 +108,7 @@ const tabAttribute = reactive({
     color: white;
     background: var(--theme-color);
     transition: color 0.4s ease, background-color 0.4s ease;
+    font-size: 14px;
 
     &:hover {
       background: var(--theme-color-hover);

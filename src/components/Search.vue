@@ -1,23 +1,11 @@
 <template>
-  <div
-    class="search-bar"
-    :style="{ top: search_attribute.search_distance + 'px' }"
-    v-if="!search_attribute.search_hidden"
-  >
-    <div
-      class="search-list-container"
-      v-if="!search_attribute.search_list_hidden"
-    >
-      <div
-        v-for="(item, index) in store.state.searchEngines"
-        :title="item.engineName"
-        :class="store.state.searchIndex === index ? 'active' : null"
-        :keys="item.engineName"
-        @click="changeSearchEngine(index)"
-      >
+  <div class="search-bar" :style="{ top: search_attribute.search_distance + 'px' }" v-if="!search_attribute.search_hidden">
+    <div class="search-list-container" v-if="!search_attribute.search_list_hidden">
+      <div v-for="(item, index) in store.state.searchEngines" :class="{ 'active': store.state.searchIndex == index }" v-show="item.status" :key="item.id" @click="changeSearchEngine(index)" >
         {{ item.engineName }}
       </div>
     </div>
+
     <div class="search-input-container">
       <input
         v-model="searchInput"
@@ -25,17 +13,14 @@
         v-focus="store.state.setting.focusInput"
         placeholder="Search"
         @keydown.enter="jumpPage"
-        :style="{
-          'border-radius':
-            store.state.setting.search_attribute.search_radius + 'px',
-        }"
+        :style="{'border-radius': store.state.setting.search_attribute.search_radius + 'px'}"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, reactive } from "vue"
 import { useStore } from "vuex"
 
 const store = useStore()
@@ -65,6 +50,7 @@ const jumpPage = () => {
 </script>
 
 <style lang="less" scoped>
+
 .search-bar {
   position: absolute;
   max-width: 420px;
@@ -79,17 +65,18 @@ const jumpPage = () => {
     margin-bottom: 15px;
 
     div {
+      margin-right: 10px;
       width: 70px;
       height: 40px;
       margin: 0px 10px;
       color: white;
-      text-align: center;
       cursor: pointer;
+      text-align: center;
 
-      transition: border-color 0.3s;
       border-bottom: 4px solid;
       border-color: transparent;
       text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
     }
 
     .active {

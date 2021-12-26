@@ -34,7 +34,7 @@ const clickLink = (item) => {
 }
 
 const getMenuData = (item, itemIndex) => {
-  return reactive({
+  return {
     list: [
       {
         text: "编辑",
@@ -88,7 +88,7 @@ const getMenuData = (item, itemIndex) => {
         },
       },
     ],
-  })
+  }
 }
 </script>
 

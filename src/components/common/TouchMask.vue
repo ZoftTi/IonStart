@@ -19,7 +19,7 @@ const judgeY = (clientY) => {
   }
 }
 
-const rightMenuObj = reactive({
+const rightMenuObj = {
   list: [
     {
       text: "添加网址",
@@ -52,6 +52,16 @@ const rightMenuObj = reactive({
       },
     },
     {
+      text: "搜索设置",
+      icon: "icon-biaoshi",
+      handler: () => {
+        store.commit("CHANGE_APP_STATUS", {
+          appKey: "search_engines",
+          isShow: true,
+        })
+      },
+    },
+    {
       text: "背景设置",
       icon: "icon-beijingtupian",
       handler: () => {
@@ -61,18 +71,8 @@ const rightMenuObj = reactive({
         })
       },
     },
-    {
-      text: "图标设置",
-      icon: "icon-biaoshi",
-      handler: () => {
-        store.commit("CHANGE_APP_STATUS", {
-          appKey: "setstars_icons",
-          isShow: true,
-        })
-      },
-    },
   ],
-})
+}
 </script>
 
 <style lang="less" scoped>

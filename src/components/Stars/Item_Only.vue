@@ -38,7 +38,7 @@ const clickLink = (item) => {
   }
 }
 
-const rightMenuObj = reactive({
+const rightMenuObj = {
   list: [
     {
       text: "编辑",
@@ -81,7 +81,7 @@ const rightMenuObj = reactive({
       },
     },
   ],
-})
+}
 </script>
 
 <style lang="less" scoped>

@@ -1,23 +1,15 @@
 <template>
-  <div
-    class="stars-bar"
-    v-if="!stars_attribute.stars_hidden"
-    :style="{ top: stars_attribute.stars_distance + 'px' }"
-  >
+  <div class="stars-bar" v-if="!stars_attribute.stars_hidden" :style="{ top: stars_attribute.stars_distance + 'px' }" >
     <draggable
       v-model="itemData"
       tag="transition-group"
       :item-key="(key) => key"
       animation="300"
-      @start="clearTransition()"
-      @end="recoveryTransition()"
+      @start="isTransition = true"
+      @end="isTransition = false"
     >
       <template #item="{ element, index }">
-        <Item
-          :item="element"
-          :groupIndex="index"
-          :class="{ 'transition-clear': isTransition }"
-        />
+        <Item :item="element" :groupIndex="index" :class="{ 'transition-clear': isTransition }"/>
       </template>
     </draggable>
   </div>
@@ -49,21 +41,10 @@ export default defineComponent({
 
     const isTransition = ref(false)
 
-    const clearTransition = () => {
-      isTransition.value = true
-    }
-
-    const recoveryTransition = () => {
-      isTransition.value = false
-    }
-
     return {
-      store,
       stars_attribute,
       itemData,
       isTransition,
-      clearTransition,
-      recoveryTransition,
     }
   },
 })
