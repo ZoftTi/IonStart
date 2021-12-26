@@ -3,7 +3,7 @@
     <Tab :tabAttribute="tabAttribute" v-if="state.appStatus.setting">
       <div class="row_wrap" id="account">
         <div class="head flex-center">
-          <img src="../assets/head_shot.jpg" alt="" />
+          <img src="@/assets/head_shot.jpg" alt="" />
         </div>
         <div class="row" style="color: var(--disabled)">
           <span>管理你的账户「 开发中暂不可用 」</span>

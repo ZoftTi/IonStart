@@ -128,10 +128,6 @@ const getMenuData = (item, itemIndex) => {
     border-radius: 8px;
     background-color: #ffffffcc;
 
-    &:hover {
-      transform: scale(1.1);
-    }
-
     .icon-box {
       width: 45px;
       height: 45px;
