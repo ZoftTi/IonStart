@@ -104,7 +104,7 @@ const store = createStore({
       setting: false,
       setstars_icons: false,
       background_setting: false,
-      search_engines: true,
+      search_engines: false,
     },
     // 列表
     stars: [
