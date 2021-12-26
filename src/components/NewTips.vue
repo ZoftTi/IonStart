@@ -94,6 +94,16 @@ export default defineComponent({
           "更改设置、背景设置、图标设置等应用的默认图标",
         ],
       },
+      {
+        tags: ["新功能", "更新", "修Bug", "搜索引擎"],
+        time: "2021.12.26",
+        version: "1.3.33",
+        text: [
+          "2021.12.26 上线",
+          "增加了自定义搜索引擎的功能",
+          "修改了LOGO时间为默认显示",
+        ],
+      },
     ])
 
     const newTipsIndex = ref(newTipsArray.length - 1)
