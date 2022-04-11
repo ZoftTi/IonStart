@@ -142,28 +142,32 @@ export default defineComponent({
 
 <style lang="less">
 .stretch-leave-active {
-  animation: stretch-out 0.6s;
+  animation: stretch-out 0.8s;
 }
+
+.stretch-leave-active * {
+  display: none;
+}
+
 @keyframes stretch-out {
   0% {
     width: 740px;
     opacity: 1;
     transform: scale(1);
   }
-  30% {
-    width: 10px;
-    transform: scale(1.1);
+  50% {
+    width: 0px;
   }
   100% {
-    width: 0;
+    width: 0px;
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.7);
     color: rgba(0, 0, 0, 0);
   }
 }
 
 .fade-out-leave-active {
-  animation: fade-out 0.6s;
+  animation: fade-out 0.8s;
 }
 @keyframes fade-out {
   0% {

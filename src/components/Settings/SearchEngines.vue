@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from "vue"
+import { reactive, ref } from "vue"
 import { useStore } from "vuex"
 import draggable from "vuedraggable"
 import Tab from "@/components/common/Tab_Container"

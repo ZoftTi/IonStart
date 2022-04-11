@@ -3,7 +3,7 @@
     <div class="copyrightBox">
       © {{ new Date().getFullYear() }} 柒橙 & 极染
       <span v-if="!store.state.setting.mini_footer_info">
-        <a href="https://beian.miit.gov.cn/">｜粤ICP备2021151070号-1</a>
+        <a href="https://beian.miit.gov.cn/">｜粤ICP备2021151070号</a>
         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44170202000312"> | 粤公网安备 44170202000312号 </a>
       </span>
     </div>

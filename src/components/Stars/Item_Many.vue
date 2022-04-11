@@ -53,18 +53,6 @@ const getMenuData = (item, itemIndex) => {
         },
       },
       {
-        text: "组样式",
-        icon: "icon-info",
-        handler: (e) => {
-          store.commit("UPDATE_EDIT_GROUP", {
-            isShow: true,
-            top: e.clientY - 300 + "px",
-            left: e.clientX - 125 + "px",
-            groupIndex: props.groupIndex,
-          })
-        },
-      },
-      {
         text: "添加到组",
         icon: "icon-add",
         handler: (e) => {

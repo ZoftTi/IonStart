@@ -1,7 +1,9 @@
 import store from "../../store";
 
 export default (el, binding) => {
-  el.oncontextmenu = function(e) {
+  el.oncontextmenu = function (e) {
+    e.stopPropagation()
+    
     const oX = e.clientX;
     const oY = e.clientY;
     

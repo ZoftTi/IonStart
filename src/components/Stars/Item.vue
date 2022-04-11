@@ -1,26 +1,12 @@
 <template>
-  <div
-    :class="{
-      item: true,
-      'item-scale': state.setting.stars_attribute.stars_scale,
-    }"
-    :style="{
-      width: itemWidth,
-      'border-radius': state.setting.stars_attribute.stars_radius + 'px',
-    }"
-    @contextmenu.prevent
-  >
-    <ItemOnly
-      v-if="item.data.length == 1"
-      :data="item.data[0]"
-      :groupIndex="groupIndex"
-    />
+  <div v-right-click="rightMenuObj" :class="{ item: true, 'item-scale': stars_attribute.stars_scale && !store.state.menu.isShow }" :style="{ width: itemWidth, 'border-radius': stars_attribute.stars_radius + 'px' }" >
+    <ItemOnly v-if="item.data.length == 1" :data="item.data[0]" :groupIndex="groupIndex" />
     <ItemMany v-else :data="item.data" :groupIndex="groupIndex" />
   </div>
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from "vue"
+import { computed } from "vue"
 import ItemOnly from "./Item_Only.vue"
 import ItemMany from "./Item_Many.vue"
 import { useStore } from "vuex"
@@ -30,11 +16,40 @@ const props = defineProps({
   groupIndex: Number,
 })
 
-const state = useStore().state
+const store = useStore()
+const stars_attribute = store.state.setting.stars_attribute
 
-const itemWidth = computed(
-  () => 45 * props.item.size + 13 * (props.item.size + 1) + "px"
-)
+const itemWidth = computed(() => 45 * props.item.size + 13 * (props.item.size + 1) + "px")
+
+const rightMenuObj = {
+  list: [
+    {
+      text: "添加到组",
+      icon: "icon-add",
+      handler: (e) => {
+        store.commit("UPDATE_ADD_STARS", {
+          isShow: true,
+          title: "添加到组",
+          top: e.clientY - 300 + "px",
+          left: e.clientX - 125 + "px",
+          groupIndex: props.groupIndex,
+        })
+      },
+    },
+    {
+      text: "组样式",
+      icon: "icon-info",
+      handler: (e) => {
+        store.commit("UPDATE_EDIT_GROUP", {
+          isShow: true,
+          top: e.clientY - 300 + "px",
+          left: e.clientX - 125 + "px",
+          groupIndex: props.groupIndex,
+        })
+      },
+    },
+  ]
+}
 
 </script>
 

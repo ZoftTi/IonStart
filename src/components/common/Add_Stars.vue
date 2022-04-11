@@ -78,8 +78,6 @@ const saveAddStar = () => {
         tips.value = "获取成功"
         loadingStatus.value = false
 
-        console.log(response.data)
-
         store.commit("ADD_STAR_DATA", {
           groupIndex: state.addStars.groupIndex,
           starItem: {
