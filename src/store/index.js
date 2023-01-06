@@ -18,8 +18,7 @@ const store = createStore({
           searchIndex: val.searchIndex,
           stars: val.stars,
           setting: val.setting,
-          background_url: val.background_setting.background_url,
-          custom_background: val.background_setting.custom_background,
+          background_setting: val.background_setting,
           searchEngines: val.searchEngines
         }
       }

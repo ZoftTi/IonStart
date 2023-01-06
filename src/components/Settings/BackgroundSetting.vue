@@ -6,15 +6,15 @@
           <p>自定义「 {{ fileTips }} 」</p>
           <div
             class="custom-background"
-            @click="switchBackground(background_setting.custom_background)"
+            @click="switchBackground(background_setting.background_url)"
           >
-            <img :src="background_setting.custom_background" alt="" />
-            <div class="custom-img-select flex-center" v-if="isShowCustom">
+            <img :src="background_setting.background_url" alt="" />
+            <div class="custom-img-select flex-center">
               <i class="iconfont icon-check"></i>
             </div>
 
             <transition name="fade">
-              <div class="custom-option" v-if="isShowCustom">
+              <div class="custom-option">
                 <h4>将你本地的图片设置为背景</h4>
                 <span>建议尺寸:1920 x 1080或更高</span>
                 <div class="input-wrap flex-center">
@@ -76,11 +76,6 @@ export default defineComponent({
 
     const background_setting = computed(() => store.state.background_setting)
 
-    const isShowCustom = computed(() => {
-      const bgSetting = background_setting.value
-      return bgSetting.custom_background === bgSetting.background_url
-    })
-
     const switchBackground = (item) => {
       if (!(item === background_setting.value.background_url)) {
         store.commit("UPDATE_BACKGROUND_ATTRIBUTE", {
@@ -103,7 +98,7 @@ export default defineComponent({
         reader.readAsDataURL(file.value.files[0])
         reader.onload = function () {
           store.commit("UPDATE_BACKGROUND_ATTRIBUTE", {
-            changeKey: "custom_background",
+            changeKey: "background_url",
             beforeData: this.result,
           })
           switchBackground(this.result)
@@ -115,7 +110,6 @@ export default defineComponent({
       tabAttribute,
       background_setting,
       switchBackground,
-      isShowCustom,
       file,
       fileTips,
       changeCustomImages,
